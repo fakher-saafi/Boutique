@@ -1,0 +1,92 @@
+{% extends 'boutique1/base.html' %}
+{% block title %}{{ boutique }}{% endblock %}
+{% block boutiques_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'boutique1:detail_collection' collection.id %}">
+                        {% if collection %}
+                            <img src="{{ collection.image_collection.url }}" class="img-responsive">
+                        {% else %}
+                            <h3>Pas d'images</h3>
+                        {% endif %}
+                    </a>
+                    <h1>{{ collection.title }}</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8 col-md-9">
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+
+                    <h3>List Produits</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Nom produit</th>
+                            <th>Prix</th>
+                            <th>Description</th>
+                            <th>Image Produit</th>
+                            <th>Boutique</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for produit in collection.produit.all %}
+                            <tr>
+                                <td>{{ produit.nom_produit }}</td>
+                                <td>{{ produit.prix_produit }}</td>
+                                <td>{{ produit.description }}</td>
+                                <td>
+                                    <span href="{% url 'boutique1:detail' produit.id %}">
+                                        <img src="{{ produit.image_produit.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
+                                    </span>
+                                    <span href="{% url 'boutique1:detail' produit.id %}">{{ produit.nom_produit }}</span>
+                                </td>
+                                <td>
+                                    <a href="{% url 'boutique1:detail' produit.Boutique.id %}">
+                                        <img src="{{ produit.Boutique.logo_boutique.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
+                                    </a>
+                                    <a href="{% url 'boutique1:detail' produit.Boutique.id %}">{{ produit.Boutique.nom_boutique }}</a>
+                                </td>
+                                <td>
+                                    <form action="{% url 'boutique1:delete_coll_produit' collection.id produit.id %}" method="post" style="display: inline;">
+                                        <input type="hidden" name="produit_id" value="{{ produit.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <span class="icon-cross"></span> Supprimer
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

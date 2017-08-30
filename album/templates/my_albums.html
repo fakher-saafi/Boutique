@@ -1,0 +1,68 @@
+{% extends 'boutique1/base.html' %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Boutiques -->
+
+<div class="row"><h2>My Albums</h2></div>
+    <div class="row">
+
+
+            {% for album in albums %}
+
+
+
+               <div class="col-sm-4 col-lg-2">
+               <div class="">
+                    <div class="thumbnail">
+                        <a href="{% url 'album:albumdetails' album.id %}">
+                            <img src="{{ album.image_album.url }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h2>{{ category.title }}</h2>
+
+                            <!-- View Details -->
+                            <a href="{% url 'album:albumdetails' album.id %}" class="btn btn-outline-primary btn-sm" role="button">Détails</a>
+                            <br>
+                            <!-- Delete album -->
+                                <form action="{% url 'album:delete_album' album.id %}" method="post"
+                                      style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="album_id" value="{{ album.id }}"/>
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-trash" ></span>
+                                    </button>
+                                </form>
+
+                                <!-- Edit album -->
+                                <form action="{% url 'album:edit_album' album.id %}" method="GET"
+                                      style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="album_id" value="{{ album.id }}"/>
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </form>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+
+
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'album:create_album' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Album
+                    </button>
+                </a>
+            </div>
+
+
+    </div>
+</div>
+{% endblock %}

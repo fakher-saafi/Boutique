@@ -1,0 +1,66 @@
+{% extends 'boutique1/base.html' %}
+{% block collections_active %}active{% endblock %}
+{% block body %}
+<div class="albums-container container-fluid">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Boutiques -->
+    <div class="row">
+
+
+            {% for collection in collections %}
+
+
+
+               <div class="col-sm-4 col-lg-2">
+               <div class="">
+                    <div class="thumbnail">
+                        <a href="{% url 'boutique1:detail_collection' collection.id %}">
+                            <img src="{{ collection.image_collection.url }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <h2>{{ collection.title }}</h2>
+
+                            <!-- View Details -->
+                            <a href="{% url 'boutique1:detail_collection' collection.id %}" class="btn btn-outline-primary btn-sm" role="button">Détails</a>
+                            <br>
+                            <!-- Delete Shop -->
+                                <form action="{% url 'boutique1:delete_collection' collection.id %}" method="post"
+                                      style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="collection_id" value="{{ collection.id }}"/>
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-trash" ></span>
+                                    </button>
+                                </form>
+
+                                <!-- Edit Shop -->
+                                <form action="{% url 'boutique1:edit_collection' collection.id %}" method="GET"
+                                      style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="collection_id" value="{{ collection.id }}"/>
+                                    <button type="submit" class="btn btn-default btn-sm">
+                                        <span class="glyphicon glyphicon-edit"></span>
+                                    </button>
+                                </form>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+
+
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'boutique1:create_collection' %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Ajouter Collection
+                    </button>
+                </a>
+            </div>
+
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,291 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from themes.rokaux.com/unishop/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 13:03:43 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>Unishop | Universal E-Commerce Template
+    </title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="Unishop - Universal E-Commerce Template">
+    <meta name="keywords" content="shop, e-commerce, modern, flat style, responsive, online store, business, mobile, blog, bootstrap 4, html5, css3, jquery, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Rokaux">
+    <!-- Mobile Specific Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Favicon and Apple Icons-->
+    <link rel="icon" type="image/x-icon" href="{%  static 'favicon.ico' %}">
+    <link rel="icon" type="image/png" href="{% static 'favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'touch-icon-iphone.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'touch-icon-ipad.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'touch-icon-iphone-retina.png' %}">
+    <link rel="apple-touch-icon" sizes="167x167" href="{% static 'touch-icon-ipad-retina.png' %}">
+    <!-- Vendor Styles including: Bootstrap, Font Icons, Plugins, etc.-->
+    <link rel="stylesheet" media="screen" href="{% static 'css/vendor.min.css' %}">
+    <!-- Main Template Styles-->
+    <link id="mainStyles" rel="stylesheet" media="screen" href="{% static 'css/styles.min.css' %}">
+    <link id="mainStyles" rel="stylesheet" media="screen" href="{% static 'css/styl.min.css' %}">
+    <!-- Customizer Styles-->
+    <link rel="stylesheet" media="screen" href="{% static 'customizer/customizer.min.css' %}">
+
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <!-- Google Tag Manager-->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      '../../www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-T4DJFPZ');
+
+    </script>
+    <!-- Modernizr-->
+    <script src="{% static 'js/modernizr.min.js' %}"></script>
+  </head>
+
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+      <iframe src="http://www.googletagmanager.com/ns.html?id=GTM-T4DJFPZ" height="0" width="0" style="display: none; visibility: hidden;"></iframe>
+    </noscript>
+    <!-- Template Customizer-->
+
+    <!-- Off-Canvas Category Menu-->
+
+    <!-- Off-Canvas Mobile Menu-->
+
+    <!-- Topbar-->
+    <div class="topbar">
+      <div class="topbar-column"><a class="hidden-md-down" href="mailto:support@unishop.com"><i class="icon-mail"></i>&nbsp; support@unishop.com</a><a class="hidden-md-down" href="tel:00331697720"><i class="icon-bell"></i>&nbsp; 00 33 169 7720</a><a class="social-button sb-facebook shape-none sb-dark" href="#" target="_blank"><i class="socicon-facebook"></i></a><a class="social-button sb-twitter shape-none sb-dark" href="#" target="_blank"><i class="socicon-twitter"></i></a><a class="social-button sb-instagram shape-none sb-dark" href="#" target="_blank"><i class="socicon-instagram"></i></a><a class="social-button sb-pinterest shape-none sb-dark" href="#" target="_blank"><i class="socicon-pinterest"></i></a>
+      </div>
+      <div class="topbar-column"><a class="hidden-md-down" href="#"><i class="icon-download"></i>&nbsp; Get mobile app</a>
+        <div class="lang-currency-switcher-wrap">
+          <div class="lang-currency-switcher dropdown-toggle"><span class="language"><img alt="English" src="{% static 'img/flags/GB.png' %}"></span><span class="currency">$ USD</span></div>
+          <div class="dropdown-menu">
+            <div class="currency-select">
+              <select class="form-control form-control-rounded form-control-sm">
+                <option value="usd">$ USD</option>
+                <option value="usd">€ EUR</option>
+                <option value="usd">£ UKP</option>
+                <option value="usd">¥ JPY</option>
+              </select>
+            </div><a class="dropdown-item" href="{% static '' %}#"><img src="{% static 'img/flags/FR.png' %}" alt="Français">Français</a><a class="dropdown-item" href="#"><img src="{% static 'img/flags/DE.png' %}" alt="Deutsch">Deutsch</a><a class="dropdown-item" href="#"><img src="{% static 'img/flags/IT.png' %}" alt="Italiano">Italiano</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Navbar-->
+    <!-- Remove ".navbar-sticky" class to make navigation bar scrollable with the page.-->
+    <header class="navbar navbar-sticky">
+      <!-- Search-->
+
+      <form class="site-search" method="get" action="{% url 'discover:discover' %}">
+           {% for key, value in request.GET.items %}
+                            {% if key != 'page' and key != 'site_search' %}
+                                <div class="u-form-group">
+                                    <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+        <input type="text" name="site_search" placeholder="Type to search..."  value="{{ request.GET.q }}">
+        <div class="search-tools"><span class="clear-search">Clear</span><span class="close-search"><i class="icon-cross"></i></span></div>
+      </form>
+      <div class="site-branding">
+        <div class="inner">
+
+          <!-- Site Logo--><a class="site-logo" href="{% url 'boutique1:home' %}"><img src="{% static 'img/logo/logo.png' %}" alt="Unishop"></a>
+        </div>
+      </div>
+      <!-- Main Navigation-->
+      <nav class="site-menu">
+        <ul>
+            <li class="{% block home_active %}{% endblock %}"><a href="{% url 'boutique1:home' %}"><span>Home</span></a></li>
+
+
+            <li class="{% block boutiques_active %}{% endblock %}"><a href="{% url 'boutique1:myshop' %}"><span>Boutique</span></a></li>
+
+            <li class="{% block discover_active %}{% endblock %}"><a href="{%  url 'discover:discover' %}"><span>Discover</span></a></li>
+
+
+
+
+
+
+        </ul>
+      </nav>
+      <!-- Toolbar-->
+      <div class="toolbar">
+        <div class="inner">
+          <div class="tools">
+
+            <div class="search"><i class="icon-search"></i>
+
+            </div>
+            <div class="account"><a {% if user.is_authenticated %} href="{% url 'boutique1:edit_profile' %}"{%else%} href="{% url 'boutique1:login_user'%}"{% endif %}></a><i class="icon-head"></i>
+              <ul class="toolbar-dropdown">
+                <li class="sub-menu-title"><span>Hello, {% if user.is_authenticated %} {{ user.username }} </span> {% endif %}</li>
+
+
+                  <li><a  {% if user.is_authenticated %} href="{% url 'boutique1:edit_profile' %}"{%else%} href="{% url 'boutique1:login_user'%}"{% endif %}>My Profile</a></li>
+                  <li><a href="{% url 'boutique1:myshop' %}">My Shops</a></li>
+                  <li><a href="{% url 'boutique1:myproducts' %}">My Products</a></li>
+                  <li><a href="{% url 'boutique1:mycollections' %}">My Collections</a></li>
+                  <li><a href="{% url 'boutique1:mypromotions' %}">My Promotions</a></li>
+                  <li><a href="{% url 'wishlist:my_categorys' %}">My Wishlist</a></li>
+                  <li><a href="{% url 'album:my_albums' %}">My Albums</a></li>
+                <li class="sub-menu-separator"></li>
+              {% if user.is_authenticated %}
+                <li><a href="{% url 'boutique1:logout_user' %}"> <i class="icon-unlock"></i>Logout</a></li>
+                  {% else %}
+                  <li><a href="{% url 'boutique1:login_user' %}"> <i class="icon-lock"></i>Login</a></li>
+              {% endif %}
+              </ul>
+            </div>
+
+            <div class="cart"><a href="{% static '' %}cart.html"></a><i class="icon-bag"></i><span class="count">3</span><span class="subtotal">$289.68</span>
+              <div class="toolbar-dropdown">
+                <div class="dropdown-product-item"><span class="dropdown-product-remove"><i class="icon-cross"></i></span><a class="dropdown-product-thumb" href="shop-single.html"><img src="{% static 'img/cart-dropdown/01.jpg' %}" alt="Product"></a>
+                  <div class="dropdown-product-info"><a class="dropdown-product-title" href="{% static '' %}shop-single.html">Unionbay Park</a><span class="dropdown-product-details">1 x $43.90</span></div>
+                </div>
+                <div class="dropdown-product-item"><span class="dropdown-product-remove"><i class="icon-cross"></i></span><a class="dropdown-product-thumb" href="shop-single.html"><img src="{% static 'img/cart-dropdown/02.jpg' %}" alt="Product"></a>
+                  <div class="dropdown-product-info"><a class="dropdown-product-title" href="{% static '' %}shop-single.html">Daily Fabric Cap</a><span class="dropdown-product-details">2 x $24.89</span></div>
+                </div>
+                <div class="dropdown-product-item"><span class="dropdown-product-remove"><i class="icon-cross"></i></span><a class="dropdown-product-thumb" href="shop-single.html"><img src="{% static 'img/cart-dropdown/03.jpg' %}" alt="Product"></a>
+                  <div class="dropdown-product-info"><a class="dropdown-product-title" href="{% static '' %}shop-single.html">Haan Crossbody</a><span class="dropdown-product-details">1 x $200.00</span></div>
+                </div>
+                <div class="toolbar-dropdown-group">
+                  <div class="column"><span class="text-lg">Total:</span></div>
+                  <div class="column text-right"><span class="text-lg text-medium">$289.68&nbsp;</span></div>
+                </div>
+                <div class="toolbar-dropdown-group">
+                  <div class="column"><a class="btn btn-sm btn-block btn-secondary" href="{% static '' %}cart.html">View Cart</a></div>
+                  <div class="column"><a class="btn btn-sm btn-block btn-success" href="{% static '' %}checkout-address.html">Checkout</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+        {%block body%}
+           <div class="shop-toolbar padding-bottom-1x mb-2">
+              <div class="column">
+                  <form method="get" action="">
+
+                <div class="shop-sorting">
+                  <label for="sorting">Sort by:</label>
+                  <select name="sort_by" class="form-control" id="sorting" onchange="this.form.submit()">
+                    <option>Recent</option>
+                    <option>Low - High Price</option>
+                    <option>High - Low Price</option>
+                    <option>A - Z Order</option>
+                    <option>Z - A Order</option>
+                  </select><span class="text-muted">Showing:&nbsp;</span><span>1 - 12 items</span>
+                </div>
+                  </form>
+              </div>
+              <div class="column">
+                <div class="shop-view"><a class="grid-view active" href="{% static 'shop-grid-ls.html' %}"><span></span><span></span><span></span></a><a class="list-view" href="shop-list-ls.html"><span></span><span></span><span></span></a></div>
+              </div>
+            </div>
+
+        {%endblock%}
+
+
+
+
+      <!-- Site Footer-->
+      <footer class="site-footer">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-3 col-md-6">
+              <!-- Contact Info-->
+              <section class="widget widget-light-skin">
+                <h3 class="widget-title">Get In Touch With Us</h3>
+                <p class="text-white">Phone: 00 33 169 7720</p>
+                <ul class="list-unstyled text-sm text-white">
+                  <li><span class="opacity-50">Monday-Friday:</span>9.00 am - 8.00 pm</li>
+                  <li><span class="opacity-50">Saturday:</span>10.00 am - 6.00 pm</li>
+                </ul>
+                <p><a class="navi-link-light" href="{% static '' %}#">support@unishop.com</a></p><a class="social-button shape-circle sb-facebook sb-light-skin" href="#"><i class="socicon-facebook"></i></a><a class="social-button shape-circle sb-twitter sb-light-skin" href="#"><i class="socicon-twitter"></i></a><a class="social-button shape-circle sb-instagram sb-light-skin" href="#"><i class="socicon-instagram"></i></a><a class="social-button shape-circle sb-google-plus sb-light-skin" href="#"><i class="socicon-googleplus"></i></a>
+              </section>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <!-- Mobile App Buttons-->
+              <section class="widget widget-light-skin">
+                <h3 class="widget-title">Our Mobile App</h3><a class="market-button apple-button mb-light-skin" href="{% static '' %}#"><span class="mb-subtitle">Download on the</span><span class="mb-title">App Store</span></a><a class="market-button google-button mb-light-skin" href="#"><span class="mb-subtitle">Download on the</span><span class="mb-title">Google Play</span></a><a class="market-button windows-button mb-light-skin" href="#"><span class="mb-subtitle">Download on the</span><span class="mb-title">Windows Store</span></a>
+              </section>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <!-- About Us-->
+              <section class="widget widget-links widget-light-skin">
+                <h3 class="widget-title">About Us</h3>
+                <ul>
+                  <li><a href="{% static '' %}#">Careers</a></li>
+                  <li><a href="#">About Unishop</a></li>
+                  <li><a href="#">Our Story</a></li>
+                  <li><a href="#">Services</a></li>
+                  <li><a href="#">Our Blog</a></li>
+                </ul>
+              </section>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <!-- Account / Shipping Info-->
+              <section class="widget widget-links widget-light-skin">
+                <h3 class="widget-title">Account &amp; Shipping Info</h3>
+                <ul>
+                  <li><a href="{% static '' %}#">Your Account</a></li>
+                  <li><a href="#">Shipping Rates & Policies</a></li>
+                  <li><a href="#">Refunds & Replacements</a></li>
+                  <li><a href="#">Taxes</a></li>
+                  <li><a href="#">Delivery Info</a></li>
+                  <li><a href="#">Affiliate Program</a></li>
+                </ul>
+              </section>
+            </div>
+          </div>
+          <hr class="hr-light mt-2 margin-bottom-2x">
+          <div class="row">
+            <div class="col-md-7 padding-bottom-1x">
+              <!-- Payment Methods-->
+              <div class="margin-bottom-1x" style="max-width: 615px;"><img src="{% static 'img/payment_methods.png' %}" alt="Payment Methods">
+              </div>
+            </div>
+            <div class="col-md-5 padding-bottom-1x">
+              <div class="margin-top-1x hidden-md-up"></div>
+              <!--Subscription-->
+              <form class="subscribe-form" action="http://rokaux.us12.list-manage.com/subscribe/post?u=c7103e2c981361a6639545bd5&amp;amp;id=1194bb7544" method="post" target="_blank" novalidate>
+                <div class="clearfix">
+                  <div class="input-group input-light">
+                    <input class="form-control" type="email" name="EMAIL" placeholder="Your e-mail"><span class="input-group-addon"><i class="icon-mail"></i></span>
+                  </div>
+                  <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                  <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                    <input type="text" name="b_c7103e2c981361a6639545bd5_1194bb7544" tabindex="-1">
+                  </div>
+                  <button class="btn btn-primary" type="submit"><i class="icon-check"></i></button>
+                </div><span class="form-text text-sm text-white opacity-50">Subscribe to our Newsletter to receive early discount offers, latest news, sales and promo information.</span>
+              </form>
+            </div>
+          </div>
+          <!-- Copyright-->
+          <p class="footer-copyright">© All rights reserved. Made with &nbsp;<i class="icon-heart text-danger"></i><a href="http://rokaux.com/" target="_blank"> &nbsp;by rokaux</a></p>
+        </div>
+
+      </footer>
+
+    <!-- Back To Top Button--><a class="scroll-to-top-btn" href="#"><i class="icon-arrow-up"></i></a>
+    <!-- Backdrop-->
+    <div class="site-backdrop"></div>
+    <!-- JavaScript (jQuery) libraries, plugins and custom scripts-->
+    <script src="{% static 'js/vendor.min.js' %}"></script>
+    <script src="{% static 'js/scripts.min.js' %}"></script>
+    <!-- Customizer scripts-->
+    <script src="{% static 'customizer/customizer.min.js' %}"></script>
+
+
+<!-- Mirrored from themes.rokaux.com/unishop/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 02 Aug 2017 13:04:38 GMT -->
+</html>

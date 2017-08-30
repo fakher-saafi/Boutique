@@ -1,0 +1,142 @@
+{% extends 'boutique1/base.html' %}
+{% block title %}Ajouter Promotion{% endblock %}
+
+{% block body %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                        <a href="{% url 'boutique1:detail' boutique.id %}">
+                            {% if boutique.logo_boutique %}
+                                <img src="{{ boutique.logo_boutique.url }}" class="img-responsive">
+                            {% else %}
+                                <h3>Pas d'image</h3>
+                            {% endif %}
+                        </a>
+                    <h1>{{ boutique.nom_boutique }}</h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Song Info -->
+        <div class="col-sm-8 col-md-9">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation"><a href="{% url 'boutique1:mypromotions' %}">Voir tout</a></li>
+            </ul>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Ajouter promotion</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+
+
+                      {% include 'boutique1/form_template.html' %}
+
+                     <!--    <div class="form-group ">
+
+                    <label class="control-label col-sm-4" >{{ form.title.label_tag }}</label>
+                    <div class=" col-sm-offset-4 col-sm-5" >{{ form.title }}</div>
+
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <span class="text-danger small">{{ form.title.errors }}</span>
+                    </div>
+
+                    <label class="control-label col-sm-4" >{{ form.promotion_type.label_tag }}</label>
+                    <div class=" col-sm-offset-4 col-sm-5" >
+                        <input type="radio" name="promotion_type" checked="checked" value="Regular"/>Regular<br>
+                        <input type="radio" name="promotion_type" value="Flash" />Flash
+                    </div>
+
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <span class="text-danger small">{{ form.promotion_type.errors }}</span>
+                    </div>
+
+                    <label class="control-label col-sm-4" >{{ form.produit.label_tag }}</label>
+                    <div class=" col-sm-offset-4 col-sm-5" >{{ form.produit }}</div>
+
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <span class="text-danger small">{{ form.produit.errors }}</span>
+                    </div>
+
+                    <label class="control-label col-sm-4" >{{ form.discount_value.label_tag }}</label>
+                    <div class=" col-sm-offset-4 col-sm-5" >{{ form.discount_value }}</div>
+
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <span class="text-danger small">{{ form.discount_value.errors }}</span>
+                    </div>
+
+
+
+                              <div id="Regular" class="desc">
+                                <label class="control-label col-sm-4" >{{ form.start_time.label_tag }}</label>
+                    <div class=" col-sm-offset-4 col-sm-5" >{{ form.start_time }}</div>
+
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <span class="text-danger small">{{ form.start_time.errors }}</span>
+                    </div>
+
+                    <label class="control-label col-sm-4" >{{ form.end_time.label_tag }}</label>
+                    <div class=" col-sm-offset-4 col-sm-5" >{{ form.end_time }}</div>
+
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <span class="text-danger small">{{ form.end_time.errors }}</span>
+                    </div>
+                            </div>
+                            <div id="Flash" class="desc" style="display: none;">
+                                <label class="control-label col-sm-4" >Promotion Date:</label><br>
+                                <input class=" col-sm-offset-4 col-sm-5" type="date" name="fdate" required><br>
+                                <label class="control-label col-sm-4" >Promotion start time:</label><br>
+                                <input class=" col-sm-offset-4 col-sm-5" type="time" name="fstart" required><br>
+                                <label class="control-label col-sm-4" >Promotion end time:</label><br>
+                                <input class=" col-sm-offset-4 col-sm-5" type="time" name="fend" required><br>
+
+                            </div>
+
+                    <script type="text/javascript">
+                      $(document).ready(function() {
+                        $("input[name$='promotion_type']").click(function() {
+                            var test = $(this).val();
+
+                            $("div.desc").hide();
+                            $("#"+test).show();
+                        });
+                    });
+                    </script>
+
+                          </div> -->
+
+
+                        <input type="hidden" name="tz" id="tz" value="" />
+                        <script> var d = new Date();
+                        var n = d.getTimezoneOffset();
+                        z=-(n/60);
+                        var elem=document.getElementById("tz");
+                        elem.value =n;
+                        </script>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-primary scale-up delay-1">Entrer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+

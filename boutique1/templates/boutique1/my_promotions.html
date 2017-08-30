@@ -1,0 +1,96 @@
+{% extends 'boutique1/base.html' %}
+{% block title %}Promotion{% endblock %}
+
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row"><h2>Tous les Promotion</h2></div>
+
+    <div class="row">
+
+       <!-- Left Album Info -->
+        <div class="col-sm-4 col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'boutique1:detail' boutique.id %}">
+                        {% if boutique.logo_boutique %}
+                            <img src="{{ boutique.logo_boutique.url }}" class="img-responsive">
+                        {% else %}
+                            <h3>Pas d'images</h3>
+                        {% endif %}
+                    </a>
+                    <h1>{{ boutique.nom_boutique }}</h1>
+                </div>
+            </div>
+        </div>
+
+         <div class="col-sm-8 col-md-9">
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                 <ul class="nav nav-pills" style="margin-bottom: 10px;">
+
+                <li role="presentation"><a href="{% url 'boutique1:create_promotion'  %}">Ajouter promotion</a></li>
+                </ul>
+
+
+                    <h3>List Promotion</h3>
+
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>title</th>
+                            <th>promotion</th>
+                            <th>start</th>
+                            <th>end</th>
+                            <th>descount</th>
+
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for promotion in promotions %}
+                            <tr>
+                                <td>{{ promotion.title }}</td>
+                                <td>{{ promotion.promotion_type }}</td>
+                                <td>{{ promotion.start_time }}</td>
+                                <td>{{ promotion.end_time }}</td>
+                                <td>{{ promotion.discount_value }}</td>
+
+
+                                <td>
+                                    <form action="{% url 'boutique1:delete_promotion' promotion.id %}" method="post" style="display: inline;">
+                                        <input type="hidden" name="promotion_id" value="{{ promotion.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <span class="icon-cross"></span> Supprimer
+                                        </button>
+                                    </form>
+                                     <form action="{% url 'boutique1:edit_promotion' promotion.id %}" method="post" style="display: inline;">
+                                        <input type="hidden" name="promotion_id" value="{{ promotion.id }}" />
+                                        <button type="submit" class="btn btn-warning btn-sm">
+                                            <span class="icon-cross"></span> edit
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+{% endblock %}

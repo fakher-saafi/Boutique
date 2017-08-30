@@ -1,0 +1,339 @@
+
+{% extends 'base.html' %}
+{% block discover_active %}active{% endblock %}
+{% load staticfiles %}
+{% block body %}
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+    <script src={% static 'js/jquery.countdown.min.js' %}></script>
+
+
+     <script>
+function myFunction(p1, p2) {
+    return p1 * (100-p2)/100;
+}
+
+function myendtime(p1, p2) {
+    var date=new Date();
+
+    return p1 * (100-p2)/100;
+}
+
+</script>
+
+
+
+ <div class="offcanvas-wrapper">
+      <!-- Page Title-->
+      <div class="page-title">
+        <div class="container">
+          <div class="column">
+            <h1>Shop Grid Left Sidebar</h1>
+          </div>
+          <div class="column">
+            <ul class="breadcrumbs">
+              <li><a href="index.html">Home</a>
+              </li>
+              <li class="separator">&nbsp;</li>
+              <li>Shop Grid Left Sidebar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Page Content-->
+      <div class="container padding-bottom-3x mb-1">
+        <div class="row">
+          <!-- Products-->
+          <div class="col-xl-9 col-lg-8 push-xl-3 push-lg-4">
+            <!-- Shop Toolbar-->
+            <div class="shop-toolbar padding-bottom-1x mb-2">
+              <div class="column">
+                  <form method="get" action="{{ request.path }}">
+                       {% for key, value in request.GET.items %}
+                                {% if key != 'page' and key != 'sort_by' %}
+                                    <div class="u-form-group">
+                                        <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                <div class="shop-sorting">
+                  <label for="sorting">Sort by:</label>
+                  <select name="sort_by" class="form-control" id="sorting" onchange="this.form.submit()">
+                      <option></option>
+                    <option>Recent</option>
+                    <option>Low - High Price</option>
+                    <option>High - Low Price</option>
+                    <option>A - Z Order</option>
+                    <option>Z - A Order</option>
+                  </select><span class="text-muted">Showing:&nbsp;</span><span>1 - 12 items</span>
+                </div>
+                  </form>
+              </div>
+              <div class="column">
+                <div class="shop-view"><a class="grid-view active" href="{% static 'shop-grid-ls.html' %}"><span></span><span></span><span></span></a><a class="list-view" href="shop-list-ls.html"><span></span><span></span><span></span></a></div>
+              </div>
+            </div>
+            <!-- Products Grid-->
+            <div class="isotope-grid cols-3 mb-2">
+              <div class="gutter-sizer"></div>
+              <div class="grid-sizer"></div>
+                {% for produit in products %}
+
+              <!-- Product-->
+              <div class="grid-item">
+                <div class="product-card">
+                 {% if produit.en_promotion %}
+                    {% for promotion in promotions %}
+
+                        {% if promotion.produit_id == produit.id %}
+                            <script>console.log("ddddddd")</script>
+                            <div class="product-badge text-danger">{{ promotion.discount_value }}% Off</div><a class="product-thumb" href="{% url 'discover:detail' produit.id  %}"><img src="{{ produit.image_produit.url }}" alt="Product"></a>
+                           <h3 class="product-title"><a href="{% static 'shop-single.html' %}">{{ produit.nom_produit }}</a></h3>
+                  <h4 class="product-price">
+                      <del>${{ produit.prix_produit}}</del>$<span id="{{ promotion.id }}{{ produit.id }}"></span></h4>
+           <script>document.getElementById("{{ promotion.id }}{{ produit.id }}").innerHTML = myFunction({{ produit.prix_produit}},{{ promotion.discount_value }});</script>
+
+                             <!-- countdown    -->
+                        {% if promotion.promotion_type == "Flash" %}
+                        <div id="getting-started{{ promotion.id }}{{ produit.id }}" class="countdown mb-3 " data-date-time="{{ promotion.end_time.month }}/{{ promotion.end_time.day }}/{{ promotion.end_time.year }}">        <!--"8/30/2017 12:00:00"-->
+
+                  <div  class="item">
+                    <div id="h{{ promotion.id }}{{ produit.id }}" class="hours">00</div><span class="hours_ref">Hours</span>
+                  </div>
+                  <div  class="item">
+                    <div id="m{{ promotion.id }}{{ produit.id }}" class="minutes">00</div><span class="minutes_ref">Mins</span>
+                  </div>
+                  <div class="item">
+                    <div id="s{{ promotion.id }}{{ produit.id }}" class="seconds">00</div><span class="seconds_ref">Secs</span>
+                  </div>
+                </div>
+
+                            <script type="text/javascript">
+                            var d = new Date();
+                            var n = d.getTimezoneOffset();
+                            var decalage={{ promotion.tz}}
+                            var utcendtime=new Date();
+                            utcendtime.setMonth({{ promotion.end_time.month }});
+                            utcendtime.setYear({{ promotion.end_time.year }});
+                            utcendtime.setDate({{ promotion.end_time.day }});
+                            utcendtime.setHours({{ promotion.end_time.hour }}+decalage/60-n/60);
+                            utcendtime.setMinutes({{ promotion.end_time.minute }}+decalage%60-n%60);
+                            utcendtime.setSeconds({{ promotion.end_time.second }});
+
+                          
+                          $("#getting-started{{ promotion.id }}{{ produit.id }}")
+                          .countdown("{{ promotion.end_time.year }}/{{ promotion.end_time.month }}/{{ promotion.end_time.day }} "+utcendtime.getHours()+":"+utcendtime.getMinutes()+":{{ promotion.end_time.second }}", function(event) {
+                            $("#h{{ promotion.id }}{{ produit.id }}").text(
+                              event.strftime('%H')
+                            );
+                              $("#m{{ promotion.id }}{{ produit.id }}").text(
+                              event.strftime('%M')
+                            );
+                              $("#s{{ promotion.id }}{{ produit.id }}").text(
+                              event.strftime('%S')
+                            );
+                          });
+                        </script>
+                        {% endif %}
+
+
+                            {% endif %}
+
+
+                  {% endfor %}
+
+
+
+
+
+                      {% else %}
+
+                            <a class="product-thumb" href="{% url 'discover:detail' produit.id  %}"><img src="{{ produit.image_produit.url }}" alt="Product"></a>
+                            <h3 class="product-title"><a href="{% static 'shop-single.html' %}">{{ produit.nom_produit }}</a></h3>
+                            <h4 class="product-price">
+                             ${{ produit.prix_produit}}</h4>
+
+
+
+                    {% endif %}
+
+
+                 <div class="product-buttons">
+                      <div class="toolbar">
+        <div class="inner">
+          <div class="tools">
+
+             <div class="account" data-toggle="tooltip" title="Whishlist"><a  href="{% url 'wishlist:my_categorys' %}"></a><i class="icon-heart"></i>
+              <ul class="toolbar-dropdown">
+
+                    {% for wc in wish_categorys %}
+                     <li><a href="{% url 'wishlist:addprod' wc.id produit.id %}">{{ wc.title }}</a></li>
+                     <li class="sub-menu-separator"></li>
+                    {% endfor %}
+              <li><a href="{% url 'wishlist:create_wish_category'%}">+add category</a></li>
+
+
+              </ul>
+            </div>
+          </div></div></div>
+                  <!--  <button class=" btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i class="icon-heart"></i></button> -->
+                     <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+
+                 </div>
+                 </div>
+              </div>
+                {% endfor %}
+
+
+        </div>
+           <!-- PAGINATION -->
+            {% if products.has_other_pages %}
+               <nav class="pagination">
+               <div class="column">
+                <ul class="pages">
+
+                    {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                            <li class="active"><a href="?page={{ i }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ i }}</a></li>
+
+                        {% else %}
+                            <li ><a href="?page={{ i }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+              </div>
+               {% if products.has_next %}
+                        <div class="column text-right hidden-xs-down">
+                   <a  class="btn btn-outline-secondary btn-sm" href="?page={{ products.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Next&nbsp;<i class="icon-arrow-right"></i></a></div>
+
+                    {% else %}
+                   <div class="column text-right hidden-xs-down">
+                       <a class="disabled">Next<i class="icon-arrow-right"></i></a></div>
+                    {% endif %}
+                </nav>
+            {% endif %}
+            <!-- Pagination-->
+          </div>
+          <!-- Sidebar          -->
+        {% block filters %}
+       <div class="col-xl-3 col-lg-4 pull-xl-9 pull-lg-8">
+            <aside class="sidebar">
+              <div class="padding-top-2x hidden-lg-up"></div>
+
+              <!-- Widget Categories-->
+              <section class="widget widget-categories">
+                <h3 class="widget-title">Shop Categories</h3>
+                <ul>
+                          {% for category, value in counter %}
+                            <li>
+                                <a href="{% url 'discover:discover' %}?categorie={{ category }}{% for key, value in request.GET.items %}{% if key != 'page' and key != 'categorie'%}&{{ key }}={{ value }}{% endif %}{% endfor %}">
+                                    {{ category.label }} </a> <span>({{ value }})</span>
+
+                            </li>
+                        {% endfor %}
+                </ul>
+              </section>
+              <!-- Widget Price Range-->
+              <section class="widget widget-categories">
+                <h3 class="widget-title">Price Range</h3>
+                <form class="price-range-slider" method="GET" data-start-min="250" data-start-max="650" data-min="0" data-max="1000" data-step="1">
+                     {% for key, value in request.GET.items %}
+                                {% if key != 'page' and key != 'min' and key != 'max' %}
+                                    <div class="u-form-group">
+                                        <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                  <div class="ui-range-slider"></div>
+                  <footer class="ui-range-slider-footer">
+                    <div class="column">
+                      <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+                    </div>
+                    <div class="column" onchange="this.form.submit()">
+                      <div class="ui-range-values" onchange="this.form.submit()">
+                        <div class="ui-range-value-min" >$<span onchange="this.form.submit()"></span >
+                          <input name="min" type="hidden" onchange="this.form.submit()">
+                        </div>&nbsp;-&nbsp;
+                        <div class="ui-range-value-max">$<span onchange="this.form.submit()"></span>
+                          <input name="max" type="hidden" onchange="this.form.submit()">
+                        </div>
+                      </div>
+                    </div>
+                  </footer>
+                </form>
+              </section>
+ <link id="mainStyles1" rel="stylesheet" media="screen" href="{% static 'css/styl.min.css' %}">
+             <!-- Widget Promotion Range-->
+              <section class="widget widget-categories">
+                <h3 class="widget-title">Promotion Range</h3>
+                <form class="price-range-slider" method="GET" data-start-min="250" data-start-max="650" data-min="0" data-max="1000" data-step="1">
+                     {% for key, value in request.GET.items %}
+                                {% if key != 'page' and key != 'min' and key != 'max' %}
+                                    <div class="u-form-group">
+                                        <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                  <div  class="ui-range-slider-footer"></div>
+                  <footer class="ui-range-slider-footer ">
+
+                    <div class="column">
+                      <button class="btn btn-outline-primary btn-sm" type="submit">Filter</button>
+                    </div>
+                    <div class="column" onchange="this.form.submit()">
+                      <div class="ui-range-values" onchange="this.form.submit()">
+                        <div class="ui-range-value-min" >$<span onchange="this.form.submit()"></span >
+                          <input name="pmin" type="hidden" onchange="this.form.submit()">
+                        </div>&nbsp;-&nbsp;
+                        <div class="ui-range-value-max">$<span onchange="this.form.submit()"></span>
+                          <input name="pmax" type="hidden" onchange="this.form.submit()">
+                        </div>
+                      </div>
+                    </div>
+
+                  </footer>
+                </form>
+              </section>
+
+              <!-- Widget Brand Filter-->
+              <section class="widget">
+                <h3 class="widget-title">Filter by product type</h3>
+
+                        <form method="GET" class="product_type_filter" action="{{ request.path }}">
+                            <!-- existing get parameters notably search -->
+                            {% for key, value in request.GET.items %}
+                                {% if key != 'page' and key != 'product_type' %}
+                                    <div class="u-form-group">
+                                        <input type="hidden" name="{{ key }}" value="{{ value }}"/>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            <!---->
+                            <select name="product_type" class="form-control" onchange="this.form.submit()">
+                                <option></option>
+                                <option value="HM">Hand Made</option>
+                                <option value="VTG">Vintage</option>
+                            </select>
+
+                        </form>
+              </section>
+
+              <!-- Promo Banner-->
+
+            </aside>
+          </div>
+       {% endblock %}
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

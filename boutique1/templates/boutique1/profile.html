@@ -1,0 +1,94 @@
+{% extends 'boutique1/base.html' %}
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+ <!-- Off-Canvas Wrapper-->
+    <div class="offcanvas-wrapper">
+      <!-- Page Title-->
+      <div class="page-title">
+        <div class="container">
+          <div class="column">
+            <h1>My Profile</h1>
+          </div>
+          <div class="column">
+            <ul class="breadcrumbs">
+              <li><a href="index.html">Home</a>
+              </li>
+              <li class="separator">&nbsp;</li>
+              <li><a href="account-orders.html">Account</a>
+              </li>
+              <li class="separator">&nbsp;</li>
+              <li>My Profile</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Page Content-->
+      <div class="container padding-bottom-3x mb-2">
+        <div class="row">
+          <div class="col-lg-4">
+            <aside class="user-info-wrapper">
+              <div class="user-cover" style="background-image: url(img/account/user-cover-img.jpg);">
+                <div class="info-label" data-toggle="tooltip" title="You currently have 290 Reward Points to spend"><i class="icon-medal"></i>290 points</div>
+              </div>
+              <div class="user-info">
+                <div class="user-avatar"><a class="edit-avatar" href="#"></a><img src="img/account/user-ava.jpg" alt="User"></div>
+                <div class="user-data">
+                  <h4>{{ request.user.username }}</h4><span>Joined {{ request.user.date_joined }}</span>
+                </div>
+              </div>
+            </aside>
+            <nav class="list-group"><a class="list-group-item justify-content-between" href="account-orders.html"><span><i class="icon-bag"></i>Orders</span><span class="badge badge-primary badge-pill">6</span></a><a class="list-group-item active" href="account-profile.html"><i class="icon-head"></i>Profile</a><a class="list-group-item" href="account-address.html"><i class="icon-map"></i>Addresses</a><a class="list-group-item justify-content-between" href="account-wishlist.html"><span><i class="icon-heart"></i>Wishlist</span><span class="badge badge-primary badge-pill">3</span></a><a class="list-group-item justify-content-between" href="account-tickets.html"><span><i class="icon-tag"></i>My Tickets</span><span class="badge badge-primary badge-pill">4</span></a></nav>
+          </div>
+          <div class="col-lg-8">
+            <div class="padding-top-2x mt-2 hidden-lg-up"></div>
+
+            <form class="row" action="{% url 'boutique1:edit_profile' %}" method="post">
+
+
+                 <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="reg-fn">Username</label>
+                  <input class="form-control" type="text" name="username"  value="{{ request.user.username }}" id="reg-fn" readonly>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="reg-fn">First Name</label>
+                  <input class="form-control" type="text" name="first_name" value="{{ request.user.first_name }}" id="reg-fn" required>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="reg-ln">Last Name</label>
+                  <input class="form-control" type="text" name="last_name"  value="{{ request.user.last_name }}" id="reg-ln" required>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="reg-email">E-mail Address</label>
+                  <input class="form-control" type="email" name="email"  value="{{ request.user.email }}" id="reg-email" readonly>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="reg-pass">Password</label>
+                  <input class="form-control" type="password" name="password" id="reg-pass" required>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="reg-pass-confirm">Confirm Password</label>
+                  <input class="form-control" type="password" name="password" id="reg-pass-confirm" required>
+                </div>
+              </div>
+              <div class="col-12 text-center text-sm-right">
+                <button class="btn btn-primary margin-bottom-none" type="submit" data-toast data-toast-position="topRight" data-toast-type="success" data-toast-icon="icon-circle-check" data-toast-title="Success!" data-toast-message="Your profile updated successfuly.">Update Profile</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

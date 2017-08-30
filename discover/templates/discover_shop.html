@@ -1,0 +1,105 @@
+
+{% extends 'base.html' %}
+{% block discover_active %}active{% endblock %}
+{% load staticfiles %}
+{% block body %}
+ <div class="offcanvas-wrapper">
+      <!-- Page Title-->
+      <div class="page-title">
+        <div class="container">
+          <div class="column">
+            <h1>Shop Grid Left Sidebar</h1>
+          </div>
+          <div class="column">
+            <ul class="breadcrumbs">
+              <li><a href="index.html">Home</a>
+              </li>
+              <li class="separator">&nbsp;</li>
+              <li>Shop Grid Left Sidebar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Page Content-->
+      <div class="container padding-bottom-3x mb-1">
+        <div class="row">
+          <!-- Products-->
+          <div class="col-xl-9 col-lg-8 push-xl-3 push-lg-4">
+            <!-- Shop Toolbar-->
+
+            <!-- Products Grid-->
+            <div class="isotope-grid cols-3 mb-2">
+              <div class="gutter-sizer"></div>
+              <div class="grid-sizer"></div>
+                {% for produit in products %}
+              <!-- Product-->
+              <div class="grid-item">
+                <div class="product-card">
+                  <div class="product-badge text-danger">50% Off</div><a class="product-thumb" href="{% url 'discover:detail' produit.id  %}"><img src="{{ produit.image_produit.url }}" alt="Product"></a>
+                  <h3 class="product-title"><a href="{% static 'shop-single.html' %}">{{ produit.nom_produit }}</a></h3>
+                  <h4 class="product-price">
+                    <del>$99.99</del>${{ produit.prix_produit}}
+                  </h4>
+                  <div class="product-buttons">
+                    <button class="btn btn-outline-secondary btn-sm btn-wishlist" data-toggle="tooltip" title="Whishlist"><i class="icon-heart"></i></button>
+                    <button class="btn btn-outline-primary btn-sm" data-toast data-toast-type="success" data-toast-position="topRight" data-toast-icon="icon-circle-check" data-toast-title="Product" data-toast-message="successfuly added to cart!">Add to Cart</button>
+                  </div>
+                </div>
+              </div>
+                {% endfor %}
+
+
+
+            </div>
+           <!-- PAGINATION -->
+            {% if products.has_other_pages %}
+               <nav class="pagination">
+               <div class="column">
+                <ul class="pages">
+
+                    {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                            <li class="active"><a href="?page={{ i }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ i }}</a></li>
+
+                        {% else %}
+                            <li ><a href="?page={{ i }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ i }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                </ul>
+              </div>
+               {% if products.has_next %}
+                        <div class="column text-right hidden-xs-down">
+                   <a  class="btn btn-outline-secondary btn-sm" href="?page={{ products.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">Next&nbsp;<i class="icon-arrow-right"></i></a></div>
+
+                    {% else %}
+                   <div class="column text-right hidden-xs-down">
+                       <a class="disabled">Next<i class="icon-arrow-right"></i></a></div>
+                    {% endif %}
+                </nav>
+            {% endif %}
+            <!-- Pagination-->
+          </div>
+          <!-- Sidebar          -->
+          <div class="col-xl-3 col-lg-4 pull-xl-9 pull-lg-8">
+            <!-- Left Album Info -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <a href="{% url 'boutique1:detail' boutique.id %}">
+                        {% if boutique.logo_boutique %}
+                            <img src="{{ boutique.logo_boutique.url }}" class="img-responsive">
+                        {% else %}
+                            <h3>Pas d'images</h3>
+                        {% endif %}
+                    </a><br><br>
+                    <h1>{{ boutique.nom_boutique }}</h1><br>
+
+
+                </div>
+            </div>
+        </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}
